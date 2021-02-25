@@ -1,0 +1,33 @@
+--테이블 생성 쿼리
+create table employee(
+    e_id  nvarchar2(20)     not null primary key,
+    e_pass nvarchar2(20)     not null,
+    e_name nvarchar2(20)     not null,
+    e_level nvarchar2(20)   not null
+);
+create table product(
+    P_KIND NVARCHAR2(20) NOT NULL,
+    P_CODE NVARCHAR2(5) PRIMARY KEY,
+    P_NAME NVARCHAR2(20) NOT NULL,
+    P_PRICE NUMBER(10) NOT NULL,
+    P_AMOUNT NUMBER(3) DEFAULT 0,
+    P_EXP DATE,
+    P_USE NVARCHAR2(20)
+);
+
+--직급 종류 제한
+ALTER TABLE employee
+ADD CONSTRAINT employee_level
+CHECK (e_level = '관리자' or e_level = '알바');
+
+--카테고리 제한
+ALTER TABLE product
+ADD CONSTRAINT product_kind
+CHECK (P_KIND = '가전제품' or P_KIND = '식품' or P_KIND = '생활필수품');
+
+--관리자 미리 입력
+insert into employee values('admin','1234', '이예은', '관리자');
+
+-- 삭제 쿼리
+DROP TABLE employee;
+DROP TABLE product;
